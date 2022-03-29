@@ -8,6 +8,11 @@ export const builderFunctions = {
     [htmlTemplates.card]: cardBuilder
 };
 
+export const addFunctions = {
+    [htmlTemplates.board]: "addNewBoard",
+    [htmlTemplates.card]: addNewCardButton
+};
+
 export function htmlFactory(template) {
     if (builderFunctions.hasOwnProperty(template)) {
         return builderFunctions[template];
@@ -31,3 +36,6 @@ function cardBuilder(card) {
     return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
 }
 
+function addNewCardButton(board) {
+    return '<button class="board-add">Add Card</button>'
+}
