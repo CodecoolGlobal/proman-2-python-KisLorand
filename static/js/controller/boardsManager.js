@@ -1,5 +1,5 @@
 import {dataHandler} from "../data/dataHandler.js";
-import {htmlFactory, htmlTemplates, addFunctions} from "../view/htmlFactory.js";
+import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {cardsManager} from "./cardsManager.js";
 
@@ -15,15 +15,26 @@ export let boardsManager = {
                 "click",
                 showHideButtonHandler
             );
-            const addCardBtn = addFunctions[htmlTemplates.card];
-            const addBtn = addCardBtn(board)
-            domManager.addChild("#root", addBtn);
-            domManager.addEventListener('#root', "click", dataHandler.createNewCard);
         }
     },
+    // addCards: async function () {
+    //     const addCardBtn = addFunctions[htmlTemplates.card];
+    //     const addBtn = addCardBtn(board)
+    //     domManager.addChild("#root", addBtn);
+    //     domManager.addEventListener(
+    //         '#root',
+    //         "click",
+    //         addNewCardHandler
+    //     );
+    // }
 };
 
 function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
     cardsManager.loadCards(boardId);
+}
+
+function addNewCardHandler(clickEvent) {
+    const boardId = clickEvent.target.dataset.boardId;
+    dataHandler.createNewCard("kacsa", boardId, "done")
 }
