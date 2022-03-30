@@ -15,18 +15,14 @@ export let boardsManager = {
                 "click",
                 showHideButtonHandler
             );
+            // console.log(`button#add-card-${board.id}.board-add`)
+            domManager.addEventListener(
+                `button#add-card-${board.id}.board-add`,
+                "click",
+                addNewCardHandler
+            );
         }
-    },
-    // addCards: async function () {
-    //     const addCardBtn = addFunctions[htmlTemplates.card];
-    //     const addBtn = addCardBtn(board)
-    //     domManager.addChild("#root", addBtn);
-    //     domManager.addEventListener(
-    //         '#root',
-    //         "click",
-    //         addNewCardHandler
-    //     );
-    // }
+    }
 };
 
 function showHideButtonHandler(clickEvent) {
@@ -36,5 +32,6 @@ function showHideButtonHandler(clickEvent) {
 
 function addNewCardHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
-    dataHandler.createNewCard("kacsa", boardId, "done")
+    console.log(boardId)
+    dataHandler.createNewCard("New Card", boardId, 1)
 }
