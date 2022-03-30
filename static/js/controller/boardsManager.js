@@ -23,6 +23,16 @@ export let boardsManager = {
 
         }
     },
+    // addCards: async function () {
+    //     const addCardBtn = addFunctions[htmlTemplates.card];
+    //     const addBtn = addCardBtn(board)
+    //     domManager.addChild("#root", addBtn);
+    //     domManager.addEventListener(
+    //         '#root',
+    //         "click",
+    //         addNewCardHandler
+    //     );
+    // }
 };
 
 function showHideButtonHandler(clickEvent) {
@@ -32,7 +42,7 @@ function showHideButtonHandler(clickEvent) {
 
 function renameTitle(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
-    let board = document.querySelectorAll(".board");
+    let board = document.querySelectorAll(".board-header");
     let title = document.querySelectorAll(".board-title");
     let InputDiv = document.createElement("div");
     let inputField = document.createElement("input");
@@ -48,7 +58,13 @@ function renameTitle(clickEvent) {
     board[boardId - 1].appendChild(InputDiv);
 
     saveBtn.addEventListener("click", () =>{
-        board[boardId - 1].appendChild(title[boardId-1]);
+        let addCard = document.querySelectorAll(".board-add");
+        board[boardId - 1].insertBefore(title[boardId-1], board[boardId - 1].firstChild);
         board[boardId - 1].removeChild(InputDiv);
     })
+}
+
+function addNewCardHandler(clickEvent) {
+    const boardId = clickEvent.target.dataset.boardId;
+    dataHandler.createNewCard("kacsa", boardId, "done")
 }
