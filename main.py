@@ -40,6 +40,14 @@ def rename_post():
         board_data = request.get_json()
         queries.update_board(board_data)
 
+@app.route("/api/boards/<int:board_id>/new_card/", methods = ["GET", "POST"])
+@json_response
+def add_new_card(board_id: int):
+    if request.method == "POST":
+        insert_values = request.get_json()
+        return queries.add_new_card_to_board(board_id, "cards", insert_values)
+
+
 def main():
     app.run(debug=True)
 

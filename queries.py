@@ -46,6 +46,7 @@ def get_cards_for_board(board_id):
 
     return matching_cards
 
+
 def update_board(board_data):
     return data_manager.execute_insert(
     """
@@ -54,3 +55,12 @@ def update_board(board_data):
     Where id = %(board_id)s
     """
     , {"title": board_data["boardTitle"], "board_id": board_data["boardId"]})
+
+
+def add_new_card_to_board(board_id, table_name, values):
+    insert_new_card = data_manager.execute_insert(
+        "INSERT INTO cards (board_id, status_id, title, card_order) " \
+            "VALUES (%(board_id)s, %(status_id)s, %(title)s, 0)",
+        {"table_name": table_name, "board_id": board_id, "status_id": values[2], "title": values[0]})
+    return insert_new_card
+
