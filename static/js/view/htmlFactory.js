@@ -1,15 +1,11 @@
 export const htmlTemplates = {
     board: 1,
-    card: 2,
-    input: 3,
-    button: 4
+    card: 2
 }
 
 export const builderFunctions = {
     [htmlTemplates.board]: boardBuilder,
-    [htmlTemplates.card]: cardBuilder,
-    [htmlTemplates.input]: inputBuilder,
-    [htmlTemplates.button]: buttonBuilder
+    [htmlTemplates.card]: cardBuilder
 };
 
 export function htmlFactory(template) {
@@ -39,15 +35,4 @@ function boardBuilder(board) {
 
 function cardBuilder(card) {
     return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
-}
-
-function inputBuilder(labelText){
-    return `<label for="new-board">${labelText}</label>
-            <input type="text" id="new-board" value="write here">`
-
-}
-
-
-function buttonBuilder(buttonText, buttonId){
-    return `<button type="button" id="${buttonId}">${buttonText}</button>`
 }

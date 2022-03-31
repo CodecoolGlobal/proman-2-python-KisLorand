@@ -7,6 +7,7 @@ export let boardsManager = {
 
     loadBoards: async function () {
         let currenBoardId = 0;
+        document.querySelector("#root").innerHTML = ""
         const boards = await dataHandler.getBoards();
         for (let board of boards) {
             const boardBuilder = htmlFactory(htmlTemplates.board);
@@ -21,7 +22,7 @@ export let boardsManager = {
         document.getElementById('add-board').dataset.current_board_id = `${currenBoardId}`
         domManager.addEventListener(`#add-board[data-current_board_id="${currenBoardId}"]`,
                                     'click',
-                                    addNewBoard)
+                                    displayNewBoardInput)
                         domManager.addEventListener(
                 `button#add-card-${board.id}.board-add`,
                 "click",
@@ -54,23 +55,24 @@ function showHideButtonHandler(clickEvent) {
 }
 
 
-function  addNewBoard(clickEvent){
-    let inputBuilder = htmlFactory(htmlTemplates.input)
-    //let newBoardContainer = document.getElementById('new-board-container')
-    const input = inputBuilder('Add New Board Name')
-    const buttonBuilder = htmlFactory(htmlTemplates.button)
-    const addBoardButton = buttonBuilder('Add','add-board-btn')
-    domManager.addChild('#new-board-container',input )
-    domManager.addChild('#new-board-container',addBoardButton )
-     let inputValue = document.querySelector('#new-board').value
-     const title = {'title': inputValue}
-    domManager.addEventListener('#add-board-btn',
-                                'click',
-         async () => {
-               await dataHandler.createNewBoard(title)})
-
-
+ function displayNewBoardInput(clickEvent){
+             const addNewBoardInput = document.getElementById('add-new-board-input')
+             if (addNewBoardInput.style.display === 'block'){
+                 addNewBoardInput.style.display = 'none'
+             }else {
+                 addNewBoardInput.style.display = 'block'
+             }
+            domManager.addEventListener('#add-board-btn',
+                'click', addNewBoard )
 }
+
+async function addNewBoard(){
+            const inputValue = document.querySelector('#new-board').value
+             if (inputValue){
+             const title = {'title': inputValue}
+             let response = await dataHandler.createNewBoard(title)
+                 if(response)await boardsManager.loadBoards()
+}}
 
 
 function renameTitle(clickEvent) {

@@ -1,3 +1,8 @@
 #boards {
     background-color: green;
 }
+
+#add-new-board-input{
+    display: none;
+}
+
