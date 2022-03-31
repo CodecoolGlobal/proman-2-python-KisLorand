@@ -47,12 +47,7 @@ function showHideButtonHandler(clickEvent) {
 
 
  function displayNewBoardInput(){
-             const addNewBoardInput = document.getElementById('add-new-board-input')
-             if (addNewBoardInput.style.display === 'block'){
-                 addNewBoardInput.style.display = 'none'
-             }else {
-                 addNewBoardInput.style.display = 'block'
-             }
+            addNewBoardButton()
             domManager.addEventListener('#add-board-btn',
                 'click', addNewBoard )
 }
@@ -63,6 +58,8 @@ async function addNewBoard(){
              const title = {'title': inputValue}
              let response = await dataHandler.createNewBoard(title)
                  if(response)await boardsManager.loadBoards()
+             addNewBoardButton()
+
 }}
 
 
@@ -90,4 +87,12 @@ function addNewCardHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
     dataHandler.createNewCard("New Card", boardId, 1)
 }
+
+function addNewBoardButton(){
+    const addNewBoardInput = document.getElementById('add-new-board-input')
+             if (addNewBoardInput.style.display === 'block'){
+                 addNewBoardInput.style.display = 'none'
+             }else {
+                 addNewBoardInput.style.display = 'block'
+}}
 
