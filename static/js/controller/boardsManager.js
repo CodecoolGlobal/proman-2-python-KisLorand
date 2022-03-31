@@ -15,7 +15,7 @@ export let boardsManager = {
             currenBoardId = board.id
             domManager.addChild("#root", content);
             domManager.addEventListener(
-                `.toggle-board-button[data-board-id="${board.id}"]`,
+                `.board-toggle[data-board-id="${board.id}"]`,
                 "click",
                 showHideButtonHandler
             );
@@ -35,14 +35,26 @@ export let boardsManager = {
             "click",
             renameTitle
         );
+
+         cardsManager.loadCards(board.id).then()
         }
+
     }
 
 }
 
 function showHideButtonHandler(clickEvent) {
-    const boardId = clickEvent.target.dataset.boardId;
-    cardsManager.loadCards(boardId).then();
+    let boardId
+    if (clickEvent.target.tagName === 'I' ){
+        boardId = clickEvent.target.parentElement.dataset.boardId
+    }else boardId = clickEvent.target.dataset.boardId
+        const boardSection = document.querySelector(`section[data-board-id="${boardId}"]`)
+    console.log(boardSection)
+        for (let child of boardSection.children){
+            if (child.className === 'card' || child.className === 'card hide'){
+                child.classList.toggle('hide')
+            }
+        }
 }
 
 

@@ -30,15 +30,14 @@ function boardBuilder(board) {
                                  <button class="save-btn" data-board-id=${board.id}>Save</button>
                         </div>
                         <button class="board-add" id="add-card-${board.id}" data-board-id=${board.id}>Add Card</button>
-                        <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
+                        <button class="board-toggle" data-board-id="${board.id}"><i class="fas fa-chevron-down"></i></button>
                     </div>
-                    <button class="toggle-board-button" data-board-id="${board.id}">Show Cards</button>
                 </section>
             </div>`;
 }
 
 function cardBuilder(card) {
-    return `<div class="card" data-card-id="${card.id}">
+    return `<div class="card hide" data-card-id="${card.id}">
                 <div class="card-remove" data-card-id="${card.id}"><i class="fas fa-trash-alt"></i></div>
                 <div class="card-title" data-card-id=${card.id}>${card.title}</div>
                  <div class="input-div hide" data-card-id=${card.id}>
