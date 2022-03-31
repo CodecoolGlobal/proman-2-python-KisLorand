@@ -20,34 +20,25 @@ export let boardsManager = {
                 showHideButtonHandler
             );
         document.getElementById('add-board').dataset.current_board_id = `${currenBoardId}`
-        domManager.addEventListener(`#add-board[data-current_board_id="${currenBoardId}"]`,
-                                    'click',
-                                    displayNewBoardInput)
-                        domManager.addEventListener(
-                `button#add-card-${board.id}.board-add`,
-                "click",
-                addNewCardHandler
-            );
-            domManager.addEventListener(
-                `.board-title[data-board-id="${board.id}"]`,
-                "click",
-                renameTitle
-            );
+        domManager.addEventListener(
+            `#add-board[data-current_board_id="${currenBoardId}"]`,
+            'click',
+             displayNewBoardInput
+        );
+        domManager.addEventListener(
+            `button#add-card-${board.id}.board-add`,
+            "click",
+            addNewCardHandler
+        );
+        domManager.addEventListener(
+            `.board-title[data-board-id="${board.id}"]`,
+            "click",
+            renameTitle
+        );
         }
     }
 
-    }
-    // addCards: async function () {
-    //     const addCardBtn = addFunctions[htmlTemplates.card];
-    //     const addBtn = addCardBtn(board)
-    //     domManager.addChild("#root", addBtn);
-    //     domManager.addEventListener(
-    //         '#root',
-    //         "click",
-    //         addNewCardHandler
-    //     );
-    // }
-
+}
 
 function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
@@ -55,7 +46,7 @@ function showHideButtonHandler(clickEvent) {
 }
 
 
- function displayNewBoardInput(clickEvent){
+ function displayNewBoardInput(){
              const addNewBoardInput = document.getElementById('add-new-board-input')
              if (addNewBoardInput.style.display === 'block'){
                  addNewBoardInput.style.display = 'none'
