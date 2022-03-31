@@ -15,8 +15,8 @@ def index():
     This is a one-pager which shows all the boards and card
     """
     if request.method == 'POST':
-       data = request.get_json()
-       queries.add_new_board(data['title'])
+        data = request.get_json()
+        queries.add_new_board(data['title'])
     return render_template('index.html')
 
 
@@ -39,7 +39,7 @@ def get_cards_for_board(board_id: int):
     return queries.get_cards_for_board(board_id)
 
 
-@app.route("/api/boards/<int:board_id>/new_card/", methods = ["GET", "POST"])
+@app.route("/api/boards/<int:board_id>/new_card/", methods=["GET", "POST"])
 @json_response
 def add_new_card(board_id: int):
     if request.method == "POST":

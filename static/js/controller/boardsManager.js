@@ -67,8 +67,6 @@ function  addNewBoard(clickEvent){
     domManager.addEventListener('#add-board-btn',
                                 'click',
          async () => {
-        console.log('szai')
-                console.log(title)
                await dataHandler.createNewBoard(title)})
 
 
