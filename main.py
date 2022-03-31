@@ -39,6 +39,14 @@ def get_cards_for_board(board_id: int):
     return queries.get_cards_for_board(board_id)
 
 
+@app.route("/api/boards/<int:board_id>/new_card/", methods = ["GET", "POST"])
+@json_response
+def add_new_card(board_id: int):
+    if request.method == "POST":
+        insert_values = request.get_json()
+        return queries.add_new_card_to_board(board_id, "cards", insert_values)
+
+
 def main():
     app.run(debug=True)
 
