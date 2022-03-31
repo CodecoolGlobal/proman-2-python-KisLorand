@@ -62,3 +62,10 @@ def add_new_card_to_board(board_id, table_name, values):
         {"table_name": table_name, "board_id": board_id, "status_id": values[2], "title": values[0]})
     return insert_new_card
 
+
+def delete(payload):
+    deleted_object = data_manager.execute_insert(
+        SQL("DELETE FROM {} WHERE {}={}").
+            format(Identifier(payload["table_name"]), Identifier("id"), Literal(payload["id"]))
+    )
+    return deleted_object
