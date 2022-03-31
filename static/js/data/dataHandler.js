@@ -26,11 +26,20 @@ export let dataHandler = {
         // the card is retrieved and then the callback function is called with the card
     },
     createNewBoard: async function (boardTitle) {
-        return await apiPost('/', boardTitle)
+        return await apiPost('/api/boards', boardTitle)
         // creates new board, saves it and calls the callback function with its data
     },
     createNewCard: async function (cardTitle, boardId, statusId) {
         return await apiPost(`/api/boards/${boardId}/new_card/`, [cardTitle, boardId, statusId])
+    },
+    newBoardTitle: async function (dataTitle, dataId, dataTable) {
+        const data={
+            dataTitle : dataTitle,
+            dataId : dataId,
+            dataTable : dataTable
+        }
+        return await apiPatch(`/rename_board`, data)
+        // creates new board, saves it and calls the callback function with its data
     },
 };
 
@@ -70,5 +79,13 @@ async function apiDelete(url, payload) {
 async function apiPut(url) {
 }
 
-async function apiPatch(url) {
+async function apiPatch(url, payload) {
+    let response = await fetch(url, {
+        method: "PATCH",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+    });
+    if (response.ok) {
+        return await response.json();
+    }
 }

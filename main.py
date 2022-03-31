@@ -9,23 +9,25 @@ app = Flask(__name__)
 load_dotenv()
 
 
-@app.route("/", methods=['POST', 'GET'])
+
+@app.route("/")
 def index():
     """
     This is a one-pager which shows all the boards and card
     """
-    if request.method == 'POST':
-        data = request.get_json()
-        queries.add_new_board(data['title'])
+
     return render_template('index.html')
 
 
-@app.route("/api/boards")
+@app.route("/api/boards", methods=['POST', 'GET'])
 @json_response
 def get_boards():
     """
     All the boards
     """
+    if request.method == 'POST':
+        data = request.get_json()
+        queries.add_new_board(data['title'])
     return queries.get_boards()
 
 
@@ -39,7 +41,15 @@ def get_cards_for_board(board_id: int):
     return queries.get_cards_for_board(board_id)
 
 
-@app.route("/api/boards/<int:board_id>/new_card/", methods=["GET", "POST"])
+@app.route("/rename_board", methods=["PATCH"])
+@json_response
+def rename_post():
+    if request.method == "PATCH":
+        table_data = request.get_json()
+        return queries.update_title(table_data)
+
+
+@app.route("/api/boards/<int:board_id>/new_card/", methods = ["GET", "POST"])
 @json_response
 def add_new_card(board_id: int):
     if request.method == "POST":
