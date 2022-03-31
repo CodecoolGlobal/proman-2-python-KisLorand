@@ -23,12 +23,13 @@ export let dataHandler = {
     createNewCard: async function (cardTitle, boardId, statusId) {
         return await apiPost(`/api/boards/${boardId}/new_card/`, [cardTitle, boardId, statusId])
     },
-    newBoardTitle: async function (boardTitle, boardId) {
-        const boardData={
-            boardTitle : boardTitle,
-            boardId : boardId,
+    newBoardTitle: async function (dataTitle, dataId, dataTable) {
+        const data={
+            dataTitle : dataTitle,
+            dataId : dataId,
+            dataTable : dataTable
         }
-        return await apiPost(`/rename_board`, boardData)
+        return await apiPatch(`/rename_board`, data)
         // creates new board, saves it and calls the callback function with its data
     },
 };
@@ -59,5 +60,14 @@ async function apiDelete(url) {
 async function apiPut(url) {
 }
 
-async function apiPatch(url) {
+async function apiPatch(url, payload) {
+    let response = await fetch(url, {
+        method: "PATCH",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+    });
+    if (response.ok) {
+        console.log("MUKODIK")
+        return await response.json();
+    }
 }

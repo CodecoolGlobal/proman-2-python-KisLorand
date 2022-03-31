@@ -1,5 +1,5 @@
 import data_manager
-
+from psycopg2.sql import SQL, Literal, Identifier
 
 def get_card_status(status_id):
     """
@@ -28,6 +28,7 @@ def get_boards():
     return data_manager.execute_select(
         """
         SELECT * FROM boards
+        ORDER BY id
         ;
         """
     )
@@ -47,14 +48,11 @@ def get_cards_for_board(board_id):
     return matching_cards
 
 
-def update_board(board_data):
-    return data_manager.execute_insert(
-    """
-    UPDATE boards
-    SET title= %(title)
-    Where id = %(board_id)s
-    """
-    , {"title": board_data["boardTitle"], "board_id": board_data["boardId"]})
+def update_title(table_data):
+    return data_manager.execute_update(
+    SQL("UPDATE {} SET {} = {} Where {} = {}").
+        format(Identifier(table_data["dataTable"]), Identifier("title"), Literal(table_data["dataTitle"]),
+               Identifier("id"), Literal(table_data["dataId"])))
 
 
 def add_new_card_to_board(board_id, table_name, values):

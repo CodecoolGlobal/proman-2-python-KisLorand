@@ -34,11 +34,14 @@ def get_cards_for_board(board_id: int):
     """
     return queries.get_cards_for_board(board_id)
 
-@app.route("/rename_board", methods=["GET", "POST"])
+
+@app.route("/rename_board", methods=["PATCH"])
+@json_response
 def rename_post():
-    if request.method == "POST":
-        board_data = request.get_json()
-        queries.update_board(board_data)
+    if request.method == "PATCH":
+        table_data = request.get_json()
+        return queries.update_title(table_data)
+
 
 @app.route("/api/boards/<int:board_id>/new_card/", methods = ["GET", "POST"])
 @json_response

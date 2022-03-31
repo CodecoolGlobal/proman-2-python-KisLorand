@@ -25,6 +25,10 @@ function boardBuilder(board) {
                 <section class="board" data-board-id=${board.id}>
                     <div class="board-header">
                         <div class="board-title" data-board-id=${board.id}>${board.title}</div>
+                        <div class="input-div hide" data-board-id=${board.id}>
+                                 <input class="input-field" data-board-id=${board.id}>
+                                 <button class="save-btn" data-board-id=${board.id}>Save</button>
+                        </div>
                         <button class="board-add" id="add-card-${board.id}" data-board-id=${board.id}>Add Card</button>
                         <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
                     </div>
@@ -34,5 +38,11 @@ function boardBuilder(board) {
 }
 
 function cardBuilder(card) {
-    return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
+    return `<div class="card" data-card-id="${card.id}">
+                <div class="card-title" data-card-id=${card.id}>${card.title}</div>
+                 <div class="input-div hide" data-card-id=${card.id}>
+                                 <input class="input-field" data-card-id=${card.id}>
+                                 <button class="save-btn" data-card-id=${card.id}>Save</button>
+                        </div>
+                </div>`;
 }

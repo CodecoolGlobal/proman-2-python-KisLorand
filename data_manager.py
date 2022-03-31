@@ -1,6 +1,7 @@
 import os
 import psycopg2
 import psycopg2.extras
+from psycopg2.sql import SQL, Literal, Identifier
 
 
 def establish_connection(connection_data=None):
@@ -59,8 +60,15 @@ def execute_select(statement, variables=None, fetchall=True):
     return result_set
 
 
-def execute_insert(statement, variables):
+def execute_insert(statement, variables, ):
     with establish_connection() as conn:
         with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cursor:
             cursor.execute(statement, variables)
     return "Card created"
+
+
+def execute_update(statement):
+    with establish_connection() as conn:
+        with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cursor:
+            cursor.execute(statement)
+    return "Update Done"

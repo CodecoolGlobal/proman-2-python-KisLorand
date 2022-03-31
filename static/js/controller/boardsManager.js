@@ -36,25 +36,21 @@ function showHideButtonHandler(clickEvent) {
 
 function renameTitle(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
-    let board = document.querySelectorAll(".board-header");
-    let title = document.querySelectorAll(".board-title");
-    let InputDiv = document.createElement("div");
-    let inputField = document.createElement("input");
-    inputField.setAttribute("id", "board-title-text");
-    let saveBtn = document.createElement("button");
-    saveBtn.innerText = "Save";
+    let title = document.querySelector(`.board-title[data-board-id=\"${boardId}\"]`);
+    let inputDiv = document.querySelector(`.input-div[data-board-id="${boardId}"]`);
+    let inputField = document.querySelector(`.input-field[data-board-id="${boardId}"]`);
+    let saveBtn = document.querySelector(`.save-btn[data-board-id="${boardId}"]`);
 
-    inputField.value = title[boardId - 1].textContent;
-    InputDiv.appendChild(inputField);
-    InputDiv.appendChild(saveBtn);
-    board[boardId - 1].removeChild(title[boardId-1]);
-    board[boardId - 1].appendChild(InputDiv);
+    title.classList.toggle("hide")
+    inputField.value=title.textContent
+    inputDiv.classList.toggle("hide")
 
     saveBtn.addEventListener("click", () =>{
-        let addCard = document.querySelectorAll(".board-add");
-        board[boardId - 1].insertBefore(title[boardId-1], board[boardId - 1].firstChild);
-        board[boardId - 1].removeChild(InputDiv);
-        dataHandler.newBoardTitle(inputField.value, boardId)
+    title.classList.remove("hide")
+    inputDiv.classList.add("hide")
+    title.textContent=inputField.value
+    let table = 'boards'
+    dataHandler.newBoardTitle(inputField.value, boardId, table)
     })
 }
 
