@@ -45,3 +45,12 @@ def get_cards_for_board(board_id):
         , {"board_id": board_id})
 
     return matching_cards
+
+def update_board(board_data):
+    return data_manager.execute_insert(
+    """
+    UPDATE boards
+    SET title= %(title)
+    Where id = %(board_id)s
+    """
+    , {"title": board_data["boardTitle"], "board_id": board_data["boardId"]})

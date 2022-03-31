@@ -48,7 +48,6 @@ function renameTitle(clickEvent) {
     let inputField = document.createElement("input");
     inputField.setAttribute("id", "board-title-text");
     let saveBtn = document.createElement("button");
-    // saveBtn.setAttribute("type", "submit");
     saveBtn.innerText = "Save";
 
     inputField.value = title[boardId - 1].textContent;
@@ -61,6 +60,7 @@ function renameTitle(clickEvent) {
         let addCard = document.querySelectorAll(".board-add");
         board[boardId - 1].insertBefore(title[boardId-1], board[boardId - 1].firstChild);
         board[boardId - 1].removeChild(InputDiv);
+        dataHandler.newBoardTitle(inputField.value, boardId)
     })
 }
 

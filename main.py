@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request
 from dotenv import load_dotenv
 from util import json_response
 import mimetypes
@@ -8,7 +8,7 @@ mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
 load_dotenv()
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
     """
     This is a one-pager which shows all the boards and cards
@@ -34,6 +34,11 @@ def get_cards_for_board(board_id: int):
     """
     return queries.get_cards_for_board(board_id)
 
+@app.route("/rename_board", methods=["GET", "POST"])
+def rename_post():
+    if request.method == "POST":
+        board_data = request.get_json()
+        queries.update_board(board_data)
 
 def main():
     app.run(debug=True)
