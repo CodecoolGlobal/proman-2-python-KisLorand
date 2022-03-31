@@ -39,6 +39,7 @@ function boardBuilder(board) {
 
 function cardBuilder(card) {
     return `<div class="card" data-card-id="${card.id}">
+                <div class="card-remove" data-card-id="${card.id}"><i class="fas fa-trash-alt"></i></div>
                 <div class="card-title" data-card-id=${card.id}>${card.title}</div>
                  <div class="input-div hide" data-card-id=${card.id}>
                                  <input class="input-field" data-card-id=${card.id}>
@@ -46,3 +47,4 @@ function cardBuilder(card) {
                         </div>
                 </div>`;
 }
+

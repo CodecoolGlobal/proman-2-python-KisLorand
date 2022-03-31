@@ -8,20 +8,26 @@ mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
 load_dotenv()
 
-@app.route("/", methods=["GET", "POST"])
+
+
+@app.route("/")
 def index():
     """
-    This is a one-pager which shows all the boards and cards
+    This is a one-pager which shows all the boards and card
     """
+
     return render_template('index.html')
 
 
-@app.route("/api/boards")
+@app.route("/api/boards", methods=['POST', 'GET'])
 @json_response
 def get_boards():
     """
     All the boards
     """
+    if request.method == 'POST':
+        data = request.get_json()
+        queries.add_new_board(data['title'])
     return queries.get_boards()
 
 

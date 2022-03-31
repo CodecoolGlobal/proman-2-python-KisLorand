@@ -4,35 +4,67 @@ import {domManager} from "../view/domManager.js";
 import {cardsManager} from "./cardsManager.js";
 
 export let boardsManager = {
+
     loadBoards: async function () {
+        let currenBoardId = 0;
+        document.querySelector("#root").innerHTML = ""
         const boards = await dataHandler.getBoards();
         for (let board of boards) {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
+            currenBoardId = board.id
             domManager.addChild("#root", content);
             domManager.addEventListener(
                 `.toggle-board-button[data-board-id="${board.id}"]`,
                 "click",
                 showHideButtonHandler
             );
-            domManager.addEventListener(
-                `button#add-card-${board.id}.board-add`,
-                "click",
-                addNewCardHandler
-            );
-            domManager.addEventListener(
-                `.board-title[data-board-id="${board.id}"]`,
-                "click",
-                renameTitle
-            );
+        document.getElementById('add-board').dataset.current_board_id = `${currenBoardId}`
+        domManager.addEventListener(
+            `#add-board[data-current_board_id="${currenBoardId}"]`,
+            'click',
+             displayNewBoardInput
+        );
+        domManager.addEventListener(
+            `button#add-card-${board.id}.board-add`,
+            "click",
+            addNewCardHandler
+        );
+        domManager.addEventListener(
+            `.board-title[data-board-id="${board.id}"]`,
+            "click",
+            renameTitle
+        );
         }
     }
-};
+
+}
 
 function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
-    cardsManager.loadCards(boardId);
+    cardsManager.loadCards(boardId).then();
 }
+
+
+ function displayNewBoardInput(){
+             const addNewBoardInput = document.getElementById('add-new-board-input')
+             if (addNewBoardInput.style.display === 'block'){
+                 addNewBoardInput.style.display = 'none'
+             }else {
+                 addNewBoardInput.style.display = 'block'
+             }
+            domManager.addEventListener('#add-board-btn',
+                'click', addNewBoard )
+}
+
+async function addNewBoard(){
+            const inputValue = document.querySelector('#new-board').value
+             if (inputValue){
+             const title = {'title': inputValue}
+             let response = await dataHandler.createNewBoard(title)
+                 if(response)await boardsManager.loadBoards()
+}}
+
 
 function renameTitle(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
