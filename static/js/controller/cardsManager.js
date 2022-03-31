@@ -12,6 +12,11 @@ export let cardsManager = {
             domManager.addEventListener(
                 `.card[data-card-id="${card.id}"]`,
                 "click",
+                editCard
+            );
+            domManager.addEventListener(
+                `.card-remove[data-card-id="${card.id}"]`,
+                "click",
                 deleteButtonHandler
             );
             domManager.addEventListener(
@@ -23,7 +28,13 @@ export let cardsManager = {
     },
 };
 
+function editCard(clickEvent) {
+}
+
 function deleteButtonHandler(clickEvent) {
+    const cardId = clickEvent.target.dataset.cardId;
+    const card = document.querySelector(`.card[data-card-id="${cardId}"]`)
+    dataHandler.getCard(cardId, "delete", `/api/cards/delete/`, cardId)
 }
 
 function renameTitle(clickEvent) {

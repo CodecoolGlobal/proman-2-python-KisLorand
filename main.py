@@ -57,6 +57,14 @@ def add_new_card(board_id: int):
         return queries.add_new_card_to_board(board_id, "cards", insert_values)
 
 
+@app.route("/api/cards/delete/", methods=["GET", "POST", "DELETE"])
+@json_response
+def delete_card():
+    if request.method == "DELETE":
+        deleted_card = request.get_json()
+        return queries.delete(deleted_card)
+
+
 def main():
     app.run(debug=True)
 

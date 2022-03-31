@@ -14,7 +14,15 @@ export let dataHandler = {
     getCardsByBoardId: async function (boardId) {
         return await apiGet(`/api/boards/${boardId}/cards/`);
     },
-    getCard: async function (cardId) {
+    getCard: async function (cardId, method, url, patch) {
+        const data = {
+            id: cardId,
+        table_name: "cards"}
+        if (method === "delete") {
+            return await apiDelete(url, data);
+        } else if (method === "patch") {
+            return await apiPatch(url, patch);
+        }
         // the card is retrieved and then the callback function is called with the card
     },
     createNewBoard: async function (boardTitle) {
