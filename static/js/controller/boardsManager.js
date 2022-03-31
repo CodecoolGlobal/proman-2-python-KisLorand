@@ -25,6 +25,16 @@ export let boardsManager = {
                                     'click',
                                     addNewBoard)
     },
+    // addCards: async function () {
+    //     const addCardBtn = addFunctions[htmlTemplates.card];
+    //     const addBtn = addCardBtn(board)
+    //     domManager.addChild("#root", addBtn);
+    //     domManager.addEventListener(
+    //         '#root',
+    //         "click",
+    //         addNewCardHandler
+    //     );
+    // }
 };
 
 function showHideButtonHandler(clickEvent) {
@@ -34,8 +44,27 @@ function showHideButtonHandler(clickEvent) {
 
 
 function  addNewBoard(clickEvent){
-    const boardId = clickEvent.target.dataset.current_board_id
-    const boardName = 'board ' + boardId
-    console.log(boardName)
-    dataHandler.createNewBoard(boardName).then()
+    let inputBuilder = htmlFactory(htmlTemplates.input)
+    //let newBoardContainer = document.getElementById('new-board-container')
+    const input = inputBuilder('Add New Board Name')
+    const buttonBuilder = htmlFactory(htmlTemplates.button)
+    const addBoardButton = buttonBuilder('Add','add-board-btn')
+    domManager.addChild('#new-board-container',input )
+    domManager.addChild('#new-board-container',addBoardButton )
+     let inputValue = document.querySelector('#new-board').value
+     const title = {'title': inputValue}
+    domManager.addEventListener('#add-board-btn',
+                                'click',
+         async () => {
+        console.log('szai')
+                console.log(title)
+               await dataHandler.createNewBoard(title)})
+
+
+}
+
+
+function addNewCardHandler(clickEvent) {
+    const boardId = clickEvent.target.dataset.boardId;
+    dataHandler.createNewCard("kacsa", boardId, "done")
 }
