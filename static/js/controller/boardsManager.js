@@ -18,11 +18,13 @@ export let boardsManager = {
                 "click",
                 showHideButtonHandler
             );
-        document.getElementById('add-board').dataset.current_board_id = `${currenBoardId}`
-        domManager.addEventListener(`#add-board[data-current_board_id="${currenBoardId}"]`,
-                                    'click',
-                                    addNewBoard)
-                        domManager.addEventListener(
+            document.getElementById('add-board').dataset.current_board_id = `${currenBoardId}`
+            domManager.addEventListener(
+            `#add-board[data-current_board_id="${currenBoardId}"]`,
+            'click',
+            addNewBoard
+            );
+            domManager.addEventListener(
                 `button#add-card-${board.id}.board-add`,
                 "click",
                 addNewCardHandler
@@ -35,18 +37,7 @@ export let boardsManager = {
         }
     }
 
-    }
-    // addCards: async function () {
-    //     const addCardBtn = addFunctions[htmlTemplates.card];
-    //     const addBtn = addCardBtn(board)
-    //     domManager.addChild("#root", addBtn);
-    //     domManager.addEventListener(
-    //         '#root',
-    //         "click",
-    //         addNewCardHandler
-    //     );
-    // }
-
+}
 
 function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
