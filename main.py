@@ -1,14 +1,13 @@
-from flask import Flask, render_template, url_for, request, session, redirect
+from flask import Flask, render_template, url_for, request
 from dotenv import load_dotenv
 from util import json_response
 import mimetypes
 import queries
-import random
 
 mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
 load_dotenv()
-app.secret_key = str(random.randint(0, 16))
+
 
 
 @app.route("/")
@@ -66,35 +65,12 @@ def delete_card():
         return queries.delete(deleted_card)
 
 
-@app.route('/registration', methods=['GET', 'POST'])
-def registration_page():
-    if "user_name" in session:
-        return redirect("/")
-    if request.method == "POST":
-        new_user_name = request.form.get("new-user-name")
-        new_password = request.form.get("new-password")
-        queries.add_new_user(new_user_name, new_password)
-        return redirect('/')
-    return render_template('registration.html')
+@app.route('/api/statuses')
+@json_response
+def get_responses():
+    return queries.get_all_statuses()
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login_user():
-    if request.method == "POST":
-        input_email = request.form.get('new-user-name')
-        input_password = request.form.get('new-password')
-        valid_password = queries.get_user_password(input_email).get("user_password")
-        if data_manager.validate_login(input_password, valid_password):
-            session['user_name'] = input_email
-            session['id'] = data_manager.search_user_id(input_email)
-            return redirect('/')
-    return render_template('login.html')
-
-
-@app.route('/logout', methods=['GET', 'POST'])
-def logout_user():
-    session.clear()
-    return redirect('/')
 def main():
     app.run(debug=True)
 

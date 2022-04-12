@@ -1,7 +1,8 @@
 import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
-import {cardsManager} from "./cardsManager.js";
+
+import {columnManager} from "./coulumnManeger.js";
 
 export let boardsManager = {
 
@@ -17,8 +18,10 @@ export let boardsManager = {
             domManager.addEventListener(
                 `.board-toggle[data-board-id="${board.id}"]`,
                 "click",
-                showHideButtonHandler
-            );
+                ()=>{
+                    showHideButtonHandler(board.id)
+                }
+            )
         document.getElementById('add-board').dataset.current_board_id = `${currenBoardId}`
         domManager.addEventListener(
             `#add-board[data-current_board_id="${currenBoardId}"]`,
@@ -36,20 +39,16 @@ export let boardsManager = {
             renameTitle
         );
 
-         cardsManager.loadCards(board.id).then()
+         columnManager.loadColumns(board.id).then()
         }
 
     }
 
 }
 
-function showHideButtonHandler(clickEvent) {
-    let boardId
-    if (clickEvent.target.tagName === 'I' ){
-        boardId = clickEvent.target.parentElement.dataset.boardId
-    }else boardId = clickEvent.target.dataset.boardId
-        const boardSection = document.querySelector(`section[data-board-id="${boardId}"]`)
-        for (let child of boardSection.children){
+function showHideButtonHandler(boardId) {
+        const columnContainer= document.querySelector(`.board-column-content[data-board-id="${boardId}"]`)
+        for (let child of columnContainer.children){
             if (child.className === 'card' || child.className === 'card hide'){
                 child.classList.toggle('hide')
             }
