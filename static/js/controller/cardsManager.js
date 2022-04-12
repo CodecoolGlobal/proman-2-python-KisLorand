@@ -32,7 +32,8 @@ function editCard(clickEvent) {
 }
 
 function deleteButtonHandler(clickEvent) {
-    const cardId = clickEvent.target.dataset.cardId;
+    const cardId = clickEvent.target.parentElement.dataset.cardId;
+    console.log(cardId)
     const card = document.querySelector(`.card[data-card-id="${cardId}"]`)
     dataHandler.getCard(cardId, "delete", `/api/cards/delete/`, cardId)
 }

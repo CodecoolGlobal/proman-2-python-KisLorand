@@ -15,9 +15,7 @@ export let dataHandler = {
         return await apiGet(`/api/boards/${boardId}/cards/`);
     },
     getCard: async function (cardId, method, url, patch) {
-        const data = {
-            id: cardId,
-        table_name: "cards"}
+        const data = {id: cardId, table_name: "cards"}
         if (method === "delete") {
             return await apiDelete(url, data);
         } else if (method === "patch") {
