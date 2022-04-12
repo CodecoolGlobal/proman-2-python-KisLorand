@@ -75,7 +75,8 @@ section.board{
 }
 
 .board-column-content{
-    min-height: 49px;
+    border: black solid 1px;
+    min-height: 400px;
 }
 
 .board-column-content:empty{
