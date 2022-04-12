@@ -26,8 +26,6 @@ function initElements() {
     ui.cards = document.querySelectorAll(".card");
     ui.slots = document.querySelectorAll(".card-slot");
     ui.mixedCardsContainer = document.querySelector(".mixed-cards");
-    console.log(ui.cards)
-    console.log(ui.slots)
     ui.cards.forEach(function (card) {
         card.setAttribute("draggable", true);
         console.log("asd")
