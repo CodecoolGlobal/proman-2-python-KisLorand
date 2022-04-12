@@ -49,7 +49,6 @@ function showHideButtonHandler(clickEvent) {
         boardId = clickEvent.target.parentElement.dataset.boardId
     }else boardId = clickEvent.target.dataset.boardId
         const boardSection = document.querySelector(`section[data-board-id="${boardId}"]`)
-    console.log(boardSection)
         for (let child of boardSection.children){
             if (child.className === 'card' || child.className === 'card hide'){
                 child.classList.toggle('hide')
