@@ -43,7 +43,7 @@ function cardBuilder(card) {
                 <div class="card-title" data-card-id=${card.id}>${card.title}</div>
                 <div class="input-div hide" data-card-id=${card.id}>
                     <input class="input-field" data-card-id=${card.id}>
-                    <button class="save-btn" data-card-id=${card.id}>Save</button>
+                    <button class="save-btn" data-card-id=${card.id}>Save</butto
                 </div>
             </div>`;
 }
