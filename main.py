@@ -65,6 +65,12 @@ def delete_card():
         return queries.delete(deleted_card)
 
 
+@app.route('/api/statuses')
+@json_response
+def get_responses():
+    return queries.get_all_statuses()
+
+
 def main():
     app.run(debug=True)
 
