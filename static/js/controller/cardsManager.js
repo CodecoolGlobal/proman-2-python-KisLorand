@@ -25,7 +25,7 @@ export let cardsManager = {
                 "click",
                 renameTitle
             );
-            startDragnDrop()
+            startDragnDrop(boardId)
         }
     },
 };

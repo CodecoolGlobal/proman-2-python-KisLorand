@@ -49,6 +49,15 @@ def rename_post():
         return queries.update_title(table_data)
 
 
+@app.route("/change_status", methods=["PATCH"])
+@json_response
+def change_status():
+    if request.method == "PATCH":
+        table_data = request.get_json()
+        print(table_data)
+        return queries.change_status(table_data)
+
+
 @app.route("/api/boards/<int:board_id>/new_card/", methods = ["GET", "POST"])
 @json_response
 def add_new_card(board_id: int):

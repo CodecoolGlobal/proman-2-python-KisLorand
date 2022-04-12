@@ -1,7 +1,9 @@
+import {dataHandler} from "../data/dataHandler.js";
+
+
+let starterBoard = 0
+let cardId = 0
 const dom = {
-    isEmpty: function (el) {
-        return el.children.length === 0;
-    },
     hasClass: function (el, cls) {
         return el.classList.contains(cls);
     },
@@ -28,7 +30,7 @@ function initElements() {
     ui.mixedCardsContainer = document.querySelector(".mixed-cards");
     ui.cards.forEach(function (card) {
         card.setAttribute("draggable", true);
-        console.log("asd")
+
     });
 }
 
@@ -44,6 +46,7 @@ function initDragEvents() {
 }
 
 function initDraggable(draggable) {
+
     draggable.setAttribute("draggable", true);
     draggable.addEventListener("dragstart", handleDragStart);
     draggable.addEventListener("dragend", handleDragEnd);
@@ -58,12 +61,14 @@ function initDropzone(dropzone) {
 
 function handleDragStart(e) {
     game.dragged = e.currentTarget;
-    console.log("Drag start of", game.dragged);
+    //console.log("Drag start of", game.dragged);
     slotHighlighter();
+    starterBoard = e.currentTarget.parentElement.dataset["boardId"]
+    cardId = e.currentTarget.dataset["cardId"]
 }
 
 function handleDragEnd(e) {
-    console.log("Drag end of", game.dragged);
+   // console.log("Drag end of", game.dragged);
     slotHighlighter();
 
     game.dragged = null;
@@ -75,30 +80,32 @@ function handleDragOver(e) {
 }
 
 function handleDragEnter(e) {
-    console.log("Drag enter of", e.currentTarget);
+   // console.log("Drag enter of", e.currentTarget);
+    if(starterBoard === e.currentTarget.parentElement.dataset["boardId"]){
         e.currentTarget.style.backgroundColor = 'green';
+    }else{
+         e.currentTarget.style.backgroundColor = 'red';
+    }
 }
 
 function handleDragLeave(e) {
-    console.log("Drag Leave of", e.currentTarget);
+   // console.log("Drag Leave of", e.currentTarget);
     e.currentTarget.style.backgroundColor = '';
 }
 
 function handleDrop(e) {
     e.preventDefault();
     const dropzone = e.currentTarget;
-    console.log("Drop of", dropzone);
-    if (dom.hasClass(dropzone, "card-slot")) {
-        if (dom.isEmpty(dropzone)) {
-                dropzone.appendChild(game.dragged);
-            e.currentTarget.style.backgroundColor = '';
-        }
-    }
-    else if (dom.hasClass(dropzone, "mixed-cards")){
-        e.currentTarget.style.backgroundColor = '';
-            dropzone.appendChild(game.dragged);
-    }
+    // console.log("Drop of", dropzone);
 
+
+    if (dom.hasClass(dropzone, "card-slot") && starterBoard === dropzone.dataset["boardId"]) {
+                dropzone.appendChild(game.dragged);
+                let columnId = dropzone.dataset["columnId"]
+                dataHandler.changeCardStatus(cardId, columnId)
+                e.currentTarget.style.backgroundColor = '';
+    }
+    e.currentTarget.style.backgroundColor = '';
 }
 
 function slotHighlighter(){
