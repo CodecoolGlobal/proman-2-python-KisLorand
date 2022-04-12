@@ -41,6 +41,13 @@ export let dataHandler = {
         return await apiPatch(`/rename_board`, data)
         // creates new board, saves it and calls the callback function with its data
     },
+    changeCardStatus: async function(cardId, columnId){
+        const data ={
+            cardId : cardId,
+            columnId : columnId
+        }
+        return await apiPatch(`/change_status`, data)
+    },
 };
 
 async function apiGet(url) {

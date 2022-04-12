@@ -49,7 +49,7 @@ function cardBuilder(card) {
                 <div class="card-title" data-card-id=${card.id}>${card.title}</div>
                 <div class="input-div hide" data-card-id=${card.id}>
                     <input class="input-field" data-card-id=${card.id}>
-                    <button class="save-btn" data-card-id=${card.id}>Save</button>
+                    <button class="save-btn" data-card-id=${card.id}>Save</butto
                 </div>
             </div>`;
 }
@@ -58,7 +58,7 @@ function cardBuilder(card) {
 function columnBuilder(boardId,status) {
     return `<div class="board-column" data-board-id="${boardId}"> 
     <div class="board-column-title" data-column-id='${status.id}'>${status.title}</div>
-        <div class="board-column-content" data-coulmn-id="${status.id}" data-board-id="${boardId}">
+        <div class="board-column-content card-slot" data-column-id="${status.id}" data-board-id="${boardId}">
         </div>
     </div>`
 }

@@ -83,3 +83,8 @@ def delete(payload):
 def get_all_statuses():
     return data_manager.execute_select('''select *
     from statuses''')
+
+def change_status(table_data):
+    return data_manager.execute_update(
+        SQL("UPDATE cards SET status_id = {} Where id = {}").
+            format( Literal(table_data["columnId"]), Literal(table_data["cardId"])))

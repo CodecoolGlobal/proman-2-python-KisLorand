@@ -1,6 +1,7 @@
 import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
+import {initDragAndDrop} from "./dragndrop.js"
 
 export let cardsManager = {
     loadCards: async function (boardId) {
@@ -24,6 +25,7 @@ export let cardsManager = {
                 "click",
                 renameTitle
             );
+            startDragnDrop(boardId)
         }
     },
 };
@@ -55,4 +57,8 @@ function renameTitle(clickEvent) {
     let table = 'cards'
     dataHandler.newBoardTitle(inputField.value, cardId, table)
     })
+}
+
+function startDragnDrop(){
+    initDragAndDrop();
 }
