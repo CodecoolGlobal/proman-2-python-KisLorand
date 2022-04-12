@@ -79,3 +79,11 @@ def delete(payload):
             format(Identifier(payload["table_name"]), Identifier("id"), Literal(payload["id"]))
     )
     return deleted_object
+
+
+def delete_board(board_id):
+    data_manager.execute_delete(
+        """ DELETE FROM boards
+         WHERE id = %(board_id)s
+         """, {'board_id': board_id}
+    )

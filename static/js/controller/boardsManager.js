@@ -35,6 +35,11 @@ export let boardsManager = {
             "click",
             renameTitle
         );
+        domManager.addEventListener(
+            `#deleteBoardButton[data-board-id="${board.id}"]`,
+            "click",
+            deleteBoardButtonHandler
+        );
 
          cardsManager.loadCards(board.id).then()
         }
@@ -108,3 +113,15 @@ function addNewBoardButton(){
                  addNewBoardInput.style.display = 'block'
 }}
 
+function deleteBoardButtonHandler(clickEvent){
+    const boardId = clickEvent.currentTarget.dataset.boardId;
+    const boardToDelete =document.getElementsByClassName("board-container");
+    for (let row of boardToDelete) {
+        let rowId = row.getAttribute("data-board-id")
+            if (rowId === boardId) {
+                debugger;
+                row.remove();
+                dataHandler.deleteBoard(boardId).then()
+        }
+    }
+}

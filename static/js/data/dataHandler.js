@@ -41,6 +41,9 @@ export let dataHandler = {
         return await apiPatch(`/rename_board`, data)
         // creates new board, saves it and calls the callback function with its data
     },
+    deleteBoard: async function (boardId) {
+        await apiDelete(`/api/boards/${boardId}`);
+    }
 };
 
 async function apiGet(url) {
