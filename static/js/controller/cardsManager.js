@@ -2,6 +2,7 @@ import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 
+
 export let cardsManager = {
     loadCards: async function (boardId) {
         const cards = await dataHandler.getCardsByBoardId(boardId);
@@ -31,11 +32,13 @@ export let cardsManager = {
 function editCard(clickEvent) {
 }
 
-function deleteButtonHandler(clickEvent) {
+async function deleteButtonHandler(clickEvent) {
     const cardId = clickEvent.target.parentElement.dataset.cardId;
-    console.log(cardId)
-    const card = document.querySelector(`.card[data-card-id="${cardId}"]`)
-    dataHandler.getCard(cardId, "delete", `/api/cards/delete/`, cardId)
+    let response = await dataHandler.getCard(cardId, "delete", `/api/cards/delete/`, cardId)
+    if (response) {
+        console.log("deleted")
+        // boardsManager.loadBoards()
+    }
 }
 
 function renameTitle(clickEvent) {
