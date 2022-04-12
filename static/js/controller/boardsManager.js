@@ -56,7 +56,6 @@ function showHideButtonHandler(clickEvent) {
         }
 }
 
-
  function displayNewBoardInput(){
             addNewBoardButton()
             domManager.addEventListener('#add-board-btn',
@@ -94,9 +93,31 @@ function renameTitle(clickEvent) {
     })
 }
 
-function addNewCardHandler(clickEvent) {
+function htmlToElement(html) {
+    var template = document.createElement('template');
+    html = html.trim(); // Never return a text node of whitespace as the result
+    template.innerHTML = html;
+    return template.content.firstChild;
+}
+
+function htmlToElements(html) {
+    var template = document.createElement('template');
+    template.innerHTML = html;
+    return template.content.childNodes;
+}
+
+async function addNewCardHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
-    dataHandler.createNewCard("New Card", boardId, 1)
+    let response = dataHandler.createNewCard("New Card", boardId, 1)
+    if (response) {
+        const cards = await dataHandler.getCardsByBoardId(boardId)
+        let newCard = cards[cards.length-1]
+        let addCard = htmlFactory(htmlTemplates.card)
+        const currentBoard = document.querySelector(`section[data-board-id="${boardId}"]`)
+        let newAddedCard = htmlToElement(addCard(newCard))
+        newAddedCard.classList.toggle('hide')
+        currentBoard.appendChild(newAddedCard)
+    }
 }
 
 function addNewBoardButton(){
