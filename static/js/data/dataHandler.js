@@ -6,7 +6,7 @@ export let dataHandler = {
         // the board is retrieved and then the callback function is called with the board
     },
     getStatuses: async function () {
-        // the statuses are retrieved and then the callback function is called with the statuses
+        return await apiGet("/api/statuses");
     },
     getStatus: async function (statusId) {
         // the status is retrieved and then the callback function is called with the status
@@ -39,6 +39,19 @@ export let dataHandler = {
         return await apiPatch(`/rename_board`, data)
         // creates new board, saves it and calls the callback function with its data
     },
+
+    deleteBoard: async function (boardId) {
+        await apiDelete(`/api/boards/${boardId}`);
+    },
+
+    changeCardStatus: async function(cardId, columnId){
+        const data ={
+            cardId : cardId,
+            columnId : columnId
+        }
+        return await apiPatch(`/change_status`, data)
+    },
+
 };
 
 async function apiGet(url) {

@@ -2,30 +2,38 @@ import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {boardsManager} from "./boardsManager.js";
-
+import {initDragAndDrop} from "./dragndrop.js"
 
 export let cardsManager = {
     loadCards: async function (boardId) {
+        const columns = document.querySelectorAll(`.board-column-content[data-board-id="${boardId}"]`)
         const cards = await dataHandler.getCardsByBoardId(boardId);
         for (let card of cards) {
             const cardBuilder = htmlFactory(htmlTemplates.card);
             const content = cardBuilder(card);
-            domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
-            domManager.addEventListener(
-                `.card[data-card-id="${card.id}"]`,
-                "click",
-                editCard
-            );
-            domManager.addEventListener(
-                `.card-remove[data-card-id="${card.id}"]`,
-                "click",
-                deleteButtonHandler
-            );
-            domManager.addEventListener(
-                `.card-title[data-card-id="${card.id}"]`,
-                "click",
-                renameTitle
-            );
+            for (let column of columns) {
+                let columnId = parseInt(column.dataset["columnId"])
+                if(card["status_id"] === columnId) {
+                    domManager.addChild(`.board-column-content[data-board-id="${boardId}"][data-column-id="${columnId}"]`, content);
+
+                    domManager.addEventListener(
+                        `.card[data-card-id="${card.id}"]`,
+                        "click",
+                        editCard
+                    );
+                    domManager.addEventListener(
+                        `.card-remove[data-card-id="${card.id}"]`,
+                        "click",
+                        deleteButtonHandler
+                    );
+                    domManager.addEventListener(
+                        `.card-title[data-card-id="${card.id}"]`,
+                        "click",
+                        renameTitle
+                    );
+                    startDragnDrop(boardId)
+                }
+        }
         }
     },
 };
@@ -59,4 +67,8 @@ function renameTitle(clickEvent) {
     let table = 'cards'
     dataHandler.newBoardTitle(inputField.value, cardId, table)
     })
+}
+
+export function startDragnDrop(){
+    initDragAndDrop();
 }
