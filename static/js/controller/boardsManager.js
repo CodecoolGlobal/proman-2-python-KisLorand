@@ -47,12 +47,14 @@ export let boardsManager = {
 }
 
 function showHideButtonHandler(boardId) {
-        const columnContainer= document.querySelector(`.board-column-content[data-board-id="${boardId}"]`)
-        for (let child of columnContainer.children){
-            if (child.className === 'card' || child.className === 'card hide'){
-                child.classList.toggle('hide')
+        const columnContainer= document.querySelectorAll(`.board-column-content[data-board-id="${boardId}"]`)
+    for(let column of columnContainer){
+    for (let child of column.children) {
+        if (child.className === 'card' || child.className === 'card hide') {
+            child.classList.toggle('hide')
             }
         }
+    }
 }
 
 
