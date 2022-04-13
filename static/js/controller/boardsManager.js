@@ -51,13 +51,11 @@ export let boardsManager = {
 }
 
 function showHideButtonHandler(boardId) {
-        const columnContainer= document.querySelectorAll(`.board-column-content[data-board-id="${boardId}"]`)
-    for(let column of columnContainer){
-    for (let child of column.children) {
-        if (child.className === 'card' || child.className === 'card hide') {
-            child.classList.toggle('hide')
-            }
-        }
+        const columnContainer= document.querySelector(`.board-columns[data-board-id="${boardId}"]`)
+        if (columnContainer.className === 'board-columns' || columnContainer.className === 'board-columns hide') {
+            columnContainer.classList.toggle('hide')
+
+
     }
 }
 
