@@ -15,31 +15,35 @@ export let boardsManager = {
             const content = boardBuilder(board);
             currenBoardId = board.id
             domManager.addChild("#root", content);
+            console.log('table')
             domManager.addEventListener(
                 `.board-toggle[data-board-id="${board.id}"]`,
                 "click",
-                ()=>{
+                () => {
                     showHideButtonHandler(board.id)
                 }
             )
-        document.getElementById('add-board').dataset.current_board_id = `${currenBoardId}`
-        domManager.addEventListener(
-            `#add-board[data-current_board_id="${currenBoardId}"]`,
-            'click',
-             displayNewBoardInput
-        );
-        domManager.addEventListener(
-            `button#add-card-${board.id}.board-add`,
-            "click",
-            addNewCardHandler
-        );
-        domManager.addEventListener(
-            `.board-title[data-board-id="${board.id}"]`,
-            "click",
-            renameTitle
-        );
+            document.getElementById('add-board').dataset.current_board_id = `${currenBoardId}`
+            domManager.addEventListener(
+                `#add-board[data-current_board_id="${currenBoardId}"]`,
+                'click',
+                displayNewBoardInput
+            );
+            domManager.addEventListener(
+                `button#add-card-${board.id}.board-add`,
+                "click",
+                addNewCardHandler
+            );
+            domManager.addEventListener(
+                `.board-title[data-board-id="${board.id}"]`,
+                "click",
+                () => {
+                    let title = document.querySelector(`.board-title[data-board-id="${board.id}"]`)
+                    renameTitle(board.id, 'board', title)
+                }
+            );
 
-         columnManager.loadColumns(board.id).then()
+            columnManager.loadColumns(board.id).then()
         }
 
     }
@@ -47,49 +51,47 @@ export let boardsManager = {
 }
 
 function showHideButtonHandler(boardId) {
-        const columnContainer= document.querySelector(`.board-column-content[data-board-id="${boardId}"]`)
-        for (let child of columnContainer.children){
-            if (child.className === 'card' || child.className === 'card hide'){
-                child.classList.toggle('hide')
-            }
+    const columnContainer = document.querySelector(`.board-column-content[data-board-id="${boardId}"]`)
+    for (let child of columnContainer.children) {
+        if (child.className === 'card' || child.className === 'card hide') {
+            child.classList.toggle('hide')
         }
+    }
 }
 
 
- function displayNewBoardInput(){
-            addNewBoardButton()
-            domManager.addEventListener('#add-board-btn',
-                'click', addNewBoard )
+function displayNewBoardInput() {
+    addNewBoardButton()
+    domManager.addEventListener('#add-board-btn',
+        'click', addNewBoard)
 }
 
-async function addNewBoard(){
-            const inputValue = document.querySelector('#new-board').value
-             if (inputValue){
-             const title = {'title': inputValue}
-             let response = await dataHandler.createNewBoard(title)
-                 if(response)await boardsManager.loadBoards()
-             addNewBoardButton()
+async function addNewBoard() {
+    const inputValue = document.querySelector('#new-board').value
+    if (inputValue) {
+        const title = {'title': inputValue}
+        let response = await dataHandler.createNewBoard(title)
+        if (response) await boardsManager.loadBoards()
+        addNewBoardButton()
 
-}}
+    }
+}
 
 
-function renameTitle(clickEvent) {
-    const boardId = clickEvent.target.dataset.boardId;
-    let title = document.querySelector(`.board-title[data-board-id=\"${boardId}\"]`);
-    let inputDiv = document.querySelector(`.input-div[data-board-id="${boardId}"]`);
-    let inputField = document.querySelector(`.input-field[data-board-id="${boardId}"]`);
-    let saveBtn = document.querySelector(`.save-btn[data-board-id="${boardId}"]`);
-
+export function renameTitle(targetId, target, title) {
+    let inputDiv = document.querySelector(`.input-div[data-${target}-id="${targetId}"]`);
+    let inputField = document.querySelector(`.input-field[data-${target}-id="${targetId}"]`);
+    let saveBtn = document.querySelector(`.save-btn[data-${target}-id="${targetId}"]`);
     title.classList.toggle("hide")
-    inputField.value=title.textContent
+    inputField.value = title.innerText
     inputDiv.classList.toggle("hide")
+    saveBtn.addEventListener("click", () => {
+        title.classList.remove("hide")
+        inputDiv.classList.add("hide")
+        title.textContent = inputField.value
+        let table = 'boards' ? target === 'board' : target === 'card' ? 'cards' : 'statuses'
 
-    saveBtn.addEventListener("click", () =>{
-    title.classList.remove("hide")
-    inputDiv.classList.add("hide")
-    title.textContent=inputField.value
-    let table = 'boards'
-    dataHandler.newBoardTitle(inputField.value, boardId, table)
+        dataHandler.newBoardTitle(inputField.value, targetId, table)
     })
 }
 
@@ -98,11 +100,12 @@ function addNewCardHandler(clickEvent) {
     dataHandler.createNewCard("New Card", boardId, 1)
 }
 
-function addNewBoardButton(){
+function addNewBoardButton() {
     const addNewBoardInput = document.getElementById('add-new-board-input')
-             if (addNewBoardInput.style.display === 'block'){
-                 addNewBoardInput.style.display = 'none'
-             }else {
-                 addNewBoardInput.style.display = 'block'
-}}
+    if (addNewBoardInput.style.display === 'block') {
+        addNewBoardInput.style.display = 'none'
+    } else {
+        addNewBoardInput.style.display = 'block'
+    }
+}
 
