@@ -49,6 +49,15 @@ def rename_post():
         return queries.update_title(table_data)
 
 
+@app.route("/change_status", methods=["PATCH"])
+@json_response
+def change_status():
+    if request.method == "PATCH":
+        table_data = request.get_json()
+        print(table_data)
+        return queries.change_status(table_data)
+
+
 @app.route("/api/boards/<int:board_id>/new_card/", methods = ["GET", "POST"])
 @json_response
 def add_new_card(board_id: int):
@@ -65,10 +74,18 @@ def delete_card():
         return queries.delete(deleted_card)
 
 
+
+@app.route("/api/boards/<board_id>", methods=["DELETE"])
+@json_response
+def delete_board(board_id):
+    return queries.delete_board(board_id)
+
+
 @app.route('/api/statuses')
 @json_response
 def get_responses():
     return queries.get_all_statuses()
+
 
 
 def main():

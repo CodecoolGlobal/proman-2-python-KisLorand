@@ -51,10 +51,12 @@ export let boardsManager = {
 }
 
 function showHideButtonHandler(boardId) {
-    const columnContainer = document.querySelector(`.board-column-content[data-board-id="${boardId}"]`)
-    for (let child of columnContainer.children) {
+        const columnContainer= document.querySelectorAll(`.board-column-content[data-board-id="${boardId}"]`)
+    for(let column of columnContainer){
+    for (let child of column.children) {
         if (child.className === 'card' || child.className === 'card hide') {
             child.classList.toggle('hide')
+            }
         }
     }
 }
@@ -109,3 +111,15 @@ function addNewBoardButton() {
     }
 }
 
+function deleteBoardButtonHandler(clickEvent){
+    const boardId = clickEvent.currentTarget.dataset.boardId;
+    const boardToDelete =document.getElementsByClassName("board-container");
+    for (let row of boardToDelete) {
+        let rowId = row.getAttribute("data-board-id")
+            if (rowId === boardId) {
+                debugger;
+                row.remove();
+                dataHandler.deleteBoard(boardId).then()
+        }
+    }
+}
