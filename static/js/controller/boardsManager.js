@@ -132,12 +132,8 @@ async function addNewCardHandler(clickEvent) {
         const lastCard = cardsAfterAdd[cardsAfterAdd.length-1]
 
         // let cat = document.querySelector(`.card-title[data-card-id="${lastCard.id}"]`)
-        let cat = cardsAfterAdd
-        console.log(cards)
-        console.log(cat)
-        console.log(newAddedCard)
-        lastCard.addEventListener("click", renameTitle
-        );
+        console.log(lastCard)
+        lastCard.addEventListener("click", renameTitle);
     }
 }
 
