@@ -129,7 +129,7 @@ async function addNewCardHandler(clickEvent) {
         const lastCard = cardsAfterAdd[cardsAfterAdd.length-1]
 
         // let cat = document.querySelector(`.card-title[data-card-id="${lastCard.id}"]`)
-        console.log(lastCard)
+        console.log(newAddedCard)
         lastCard.addEventListener("click", renameTitle);
     }
 }
