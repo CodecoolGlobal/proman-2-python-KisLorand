@@ -1,7 +1,7 @@
 import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
-
+import {boardsManager} from "./boardsManager.js";
 
 export let cardsManager = {
     loadCards: async function (boardId) {
@@ -37,7 +37,7 @@ async function deleteButtonHandler(clickEvent) {
     let response = await dataHandler.getCard(cardId, "delete", `/api/cards/delete/`, cardId)
     if (response) {
         console.log("deleted")
-        // boardsManager.loadBoards()
+        boardsManager.loadBoards()
     }
 }
 

@@ -115,7 +115,18 @@ async function addNewCardHandler(clickEvent) {
         let addCard = htmlFactory(htmlTemplates.card)
         const currentBoard = document.querySelector(`section[data-board-id="${boardId}"]`)
         let newAddedCard = htmlToElement(addCard(newCard))
-        newAddedCard.classList.toggle('hide')
+        let cardDivs = document.querySelectorAll(`.card`)
+        // console.log(cardDivs)
+        // console.log(cards[1])
+        // console.log(newCard.id)
+        if (document.querySelector(`div[data-card-id="${cards[1].id}"]`).classList.contains('hide') === false) {
+            newAddedCard.classList.toggle('hide')
+        }
+        // for (let cardDiv of cardDivs) {
+        //     // if (cardDiv.id === cards[1].id) {
+        //
+        //     // }
+        // }
         currentBoard.appendChild(newAddedCard)
     }
 }
