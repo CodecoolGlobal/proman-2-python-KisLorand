@@ -36,7 +36,7 @@ function boardBuilder(board) {
                         <button id="deleteBoardButton" data-board-id=${board.id} class="board-remove">Delete board </button>
                         <button class="board-toggle" data-board-id="${board.id}"><i class="fas fa-chevron-down"></i></button>
                     </div> 
-                    <div class="board-columns" data-board-id="${board.id}">
+                    <div class="board-columns hide" data-board-id="${board.id}">
                     
                     </div>
                 </section>
@@ -45,7 +45,7 @@ function boardBuilder(board) {
 
 function cardBuilder(card) {
 
-    return `<div class="card hide" data-card-id="${card.id}">
+    return `<div class="card" data-card-id="${card.id}">
                 <div class="card-remove" data-card-id="${card.id}"><i class="fas fa-trash-alt"></i></div>
                 <div class="card-title" data-card-id=${card.id}>${card.title}</div>
                 <div class="input-div hide" data-card-id=${card.id}>
@@ -59,9 +59,12 @@ function cardBuilder(card) {
 
 function columnBuilder(boardId,status) {
     return `<div class="board-column" data-board-id="${boardId}"> 
-    <div class="board-column-title" data-column-id='${status.id}'>${status.title}</div>
-        <div class="board-column-content card-slot" data-column-id="${status.id}" data-board-id="${boardId}">
+    <div class="board-column-title" data-column-id='${status.id}' data-board-id="${boardId}"><h3>${status.title}</h3></div>
+        <div class="input-div hide" data-column-id=${status.id}>
+            <input class="input-field" data-column-id=${status.id}>
+            <button class="save-btn" data-column-id=${status.id}>Save</button>
         </div>
+        <div class="board-column-content card-slot" data-column-id="${status.id}" data-board-id="${boardId}">
     </div>`
 }
 

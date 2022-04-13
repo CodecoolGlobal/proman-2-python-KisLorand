@@ -76,6 +76,7 @@ section.board{
 
 .board-column-content{
     border: black solid 1px;
+    border-radius: var(--border-radius);
     min-height: 400px;
 }
 
