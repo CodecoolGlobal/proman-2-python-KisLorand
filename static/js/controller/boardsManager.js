@@ -119,17 +119,16 @@ async function addNewCardHandler(clickEvent) {
         let addCard = htmlFactory(htmlTemplates.card)
         const currentBoard = document.querySelector(`section[data-board-id="${boardId}"]`)
         let newAddedCard = htmlToElement(addCard(newCard))
-        if (document.querySelector(`div[data-card-id="${cards[1].id}"]`).classList.contains('hide') === false) {
-            newAddedCard.classList.toggle('hide')
+
+        if (document.querySelector(`.board-columns[data-board-id="${boardId}"]`).classList.contains('hide') === false) {
+            currentBoard.appendChild(newAddedCard)
         }
-        currentBoard.appendChild(newAddedCard)
+
         startDragnDrop(boardId)
 
         const cardsAfterAdd = await dataHandler.getCardsByBoardId(boardId)
         const lastCard = cardsAfterAdd[cardsAfterAdd.length-1]
 
-        // let cat = document.querySelector(`.card-title[data-card-id="${lastCard.id}"]`)
-        console.log(newAddedCard)
         lastCard.addEventListener("click", renameTitle);
     }
 }
