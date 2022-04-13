@@ -53,16 +53,6 @@ export let boardsManager = {
 
 }
 
-// function showHideButtonHandler(clickEvent) {
-//     let boardId
-//     if (clickEvent.target.tagName === 'I' ){
-//         boardId = clickEvent.target.parentElement.dataset.boardId
-//     }else boardId = clickEvent.target.dataset.boardId
-//         const boardSection = document.querySelector(`section[data-board-id="${boardId}"]`)
-//         for (let child of boardSection.children){
-//             if (child.className === 'card' || child.className === 'card hide'){
-//                 child.classList.toggle('hide')
-
 function showHideButtonHandler(boardId) {
         const columnContainer= document.querySelectorAll(`.board-column-content[data-board-id="${boardId}"]`)
     for(let column of columnContainer){
@@ -87,7 +77,6 @@ async function addNewBoard(){
              let response = await dataHandler.createNewBoard(title)
                  if(response)await boardsManager.loadBoards()
              addNewBoardButton()
-
 }}
 
 
@@ -138,9 +127,16 @@ async function addNewCardHandler(clickEvent) {
         }
         currentBoard.appendChild(newAddedCard)
         startDragnDrop(boardId)
-        document.querySelector(`.board-title[data-board-id="${boardId}"]`).addEventListener(
-            "click",
-            renameTitle
+
+        const cardsAfterAdd = await dataHandler.getCardsByBoardId(boardId)
+        const lastCard = cardsAfterAdd[cardsAfterAdd.length-1]
+
+        // let cat = document.querySelector(`.card-title[data-card-id="${lastCard.id}"]`)
+        let cat = cardsAfterAdd
+        console.log(cards)
+        console.log(cat)
+        console.log(newAddedCard)
+        lastCard.addEventListener("click", renameTitle
         );
     }
 }
