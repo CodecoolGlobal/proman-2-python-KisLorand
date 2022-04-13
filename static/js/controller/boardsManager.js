@@ -2,6 +2,7 @@ import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {cardsManager} from "./cardsManager.js";
+import {renameTitle} from "./cardsManager.js"
 
 export let boardsManager = {
 
@@ -119,6 +120,10 @@ async function addNewCardHandler(clickEvent) {
             newAddedCard.classList.toggle('hide')
         }
         currentBoard.appendChild(newAddedCard)
+        document.querySelector(`.board-title[data-board-id="${boardId}"]`).addEventListener(
+            "click",
+            renameTitle
+        );
     }
 }
 

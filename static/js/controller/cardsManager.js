@@ -3,6 +3,7 @@ import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {boardsManager} from "./boardsManager.js";
 
+
 export let cardsManager = {
     loadCards: async function (boardId) {
         const cards = await dataHandler.getCardsByBoardId(boardId);
@@ -36,8 +37,7 @@ async function deleteButtonHandler(clickEvent) {
     const cardId = clickEvent.target.parentElement.dataset.cardId;
     let response = await dataHandler.getCard(cardId, "delete", `/api/cards/delete/`, cardId)
     if (response) {
-        console.log("deleted")
-        boardsManager.loadBoards()
+        document.querySelector(`div[data-card-id="${cardId}"]`).remove()
     }
 }
 
