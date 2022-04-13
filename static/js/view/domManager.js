@@ -12,7 +12,7 @@ export let domManager = {
         if (parent) {
             parent.addEventListener(eventType, eventHandler);
         } else {
-            console.error("could not find such html element: " + paretIdentifier);
+            console.error("could not find such html element: " + parentIdentifier);
         }
     },
 };

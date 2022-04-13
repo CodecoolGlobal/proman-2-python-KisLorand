@@ -72,3 +72,10 @@ def execute_update(statement):
         with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cursor:
             cursor.execute(statement)
     return "Update Done"
+
+
+def execute_delete(statement, variables ):
+    with establish_connection() as conn:
+        with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cursor:
+            cursor.execute(statement, variables)
+    return "Board removed"
