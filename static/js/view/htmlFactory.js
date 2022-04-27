@@ -32,6 +32,7 @@ function boardBuilder(board) {
                                  <input class="input-field" data-board-id=${board.id}>
                                  <button class="save-btn" data-board-id=${board.id}>Save</button>
                         </div>
+                        <button class="board-col"  data-board-id=${board.id}>Add Column</button>
                         <button class="board-add" id="add-card-${board.id}" data-board-id=${board.id}>Add Card</button>
                         <button id="deleteBoardButton" data-board-id=${board.id} class="board-remove">Delete board </button>
                         <button class="board-toggle" data-board-id="${board.id}"><i class="fas fa-chevron-down"></i></button>
