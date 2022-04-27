@@ -43,6 +43,11 @@ export let boardsManager = {
                     renameTitle(board.id, 'board', title)
                 }
             );
+            domManager.addEventListener(
+            `#deleteBoardButton[data-board-id="${board.id}"]`,
+            "click",
+            deleteBoardButtonHandler
+            );
 
             columnManager.loadColumns(board.id).then()
         }
