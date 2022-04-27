@@ -36,6 +36,11 @@ export let boardsManager = {
                 addNewCardHandler
             );
             domManager.addEventListener(
+                `.board-col[data-board-id="${board.id}"]`,
+                "click",
+                addNewColumnHandler
+            )
+            domManager.addEventListener(
                 `.board-title[data-board-id="${board.id}"]`,
                 "click",
                 () => {
@@ -158,4 +163,9 @@ function deleteBoardButtonHandler(clickEvent){
                 dataHandler.deleteBoard(boardId).then()
         }
     }
+}
+async function addNewColumnHandler() {
+
+        let response = await dataHandler.createNewColumn("New Column")
+        if (response) await boardsManager.loadBoards()
 }
