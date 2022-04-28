@@ -92,18 +92,6 @@ def get_responses():
     return queries.get_all_statuses()
 
 
-@app.route('/login', methods=['POST','GET'])
-def login():
-    if request.method == 'POST':
-        session['username'] = request.form['username']
-        return redirect(url_for('index'))
-    return '''
-        <form method="post">
-            <p><input type=text name=username>
-            <p><input type=submit value=Login>
-        </form>'''
-
-
 @app.route('/login/process', methods=['POST','GET'])
 def login_data_process():
     username = request.form['username']
@@ -111,9 +99,8 @@ def login_data_process():
     data = queries.login(username,password)
     print(data)
 
-    if data == None:
-        print('Invalid username or password!')
-        return redirect('/login')
+    if data != None:
+        session['username'] = request.form['username']
 
     return redirect('/')
 
@@ -126,9 +113,10 @@ def register():
     return redirect('/')
 
 
-@app.route('/logout')
+@app.route('/logout', methods=['POST','GET'])
 def logout():
-    session.pop('username', None)
+    print(session)
+    session.pop('username',)
     return redirect(url_for('index'))
 
 def main():

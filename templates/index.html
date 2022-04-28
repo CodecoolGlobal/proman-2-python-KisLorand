@@ -32,6 +32,7 @@
     </head> {% endblock %}
 {% block content %}
     <body>
+        {% if session != {} %}
     <div id="new-board-container">
         <button type="button" class="button" id="add-board" data-current_id=''>Add new board</button>
         <div id="add-new-board-input">
@@ -42,7 +43,9 @@
     </div>
     <div id="root">
     </div>
+        {% endif %}
 
+    {% if session == {} %}
     <div id="register">
         <h1 class="title"> Registration </h1>
         <div id="session_register">
@@ -57,10 +60,10 @@
                 <button type="submit" id="register_button" name="register_button"> Submit</button>
             </form>
         </div>
-
+    {% endif %}
 
     </div>
-    {% if session == None %}
+    {% if session == {} %}
     <div id="login">
         <p>Enter data to login:</p>
         <form action="{{ url_for('login_data_process') }}" method="POST">
@@ -70,17 +73,12 @@
                 <input name="password" id="password" type="password" required>
             <button type="submit">Submit</button>
         </form>
-            {% if 'username' in session %}
-        <div>
-            <p>You will see private boards</p>
-        </div>
 
-    <!-- not logged in -->
-    {% else %}
-        <div>
-            <p>Wrong username or password<p>
         </div>
-    {% endif %}
+    {% else  %}
+        <form action="{{ url_for('logout') }}" method="post">
+        <button id="logout" type="submit" >Logout </button>
+        </form>
     {% endif %}
     </div>
 
