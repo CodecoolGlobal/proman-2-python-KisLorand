@@ -55,6 +55,14 @@ export let dataHandler = {
         return await apiPatch(`/change_status`, data)
     },
 
+    renameColumn: async function (newColTitle, columnId) {
+        const data={
+            dataColumnId : columnId,
+            dataColTitle : newColTitle
+        }
+        return await apiPatch(`/api/rename_column`, data)
+    },
+
 };
 
 async function apiGet(url) {

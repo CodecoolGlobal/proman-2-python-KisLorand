@@ -64,9 +64,7 @@ export let boardsManager = {
 function showHideButtonHandler(boardId) {
         const columnContainer= document.querySelector(`.board-columns[data-board-id="${boardId}"]`)
         if (columnContainer.className === 'board-columns' || columnContainer.className === 'board-columns hide') {
-            columnContainer.classList.toggle('hide')
-
-
+            columnContainer.classList.toggle('hide');
     }
 }
 
@@ -85,7 +83,6 @@ async function addNewBoard() {
         let response = await dataHandler.createNewBoard(title)
         if (response) await boardsManager.loadBoards()
         addNewBoardButton()
-
     }
 }
 
