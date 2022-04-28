@@ -55,9 +55,7 @@ export let dataHandler = {
     renameColumn: async function (newColTitle, columnId) {
         const data={
             dataColumnId : columnId,
-            dataColTitle : newColTitle,
-            // dataId : dataId,
-            // dataTable : dataTable
+            dataColTitle : newColTitle
         }
         return await apiPatch(`/api/rename_column`, data)
     },
