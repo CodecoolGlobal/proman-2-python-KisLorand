@@ -105,3 +105,11 @@ def update_column(col_data):
             format( Literal(col_data["dataColTitle"]), Literal(col_data["dataColumnId"]) )
     )
 
+
+def add_new_status(title):
+    new_status = data_manager.execute_insert(
+        '''
+        INSERT INTO statuses (title) VALUES (%(title)s)
+        ''', {'title': title})
+    return new_status
+
