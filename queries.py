@@ -89,8 +89,8 @@ def delete_board(board_id):
 
 
 def get_all_statuses():
-    return data_manager.execute_select('''select *
-    from statuses''')
+    return data_manager.execute_select('''SELECT *
+    FROM statuses ORDER BY id ASC''')
 
 
 def change_status(table_data):
