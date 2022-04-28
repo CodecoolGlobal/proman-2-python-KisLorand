@@ -42,11 +42,12 @@ function renameColumnTitle(statusId, colTitle) {
 }
 
 async function removeDivHandler(event){
-    const inputValue = event.currentTarget.parentNode.children[0].value;
-    const columnId = event.currentTarget.parentNode.children[0].dataset.columnId
-    event.currentTarget.parentNode.parentNode.parentNode.removeChild(event.currentTarget.parentNode.parentNode);
+    const inputDiv = event.currentTarget.parentNode;
+    const inputValue = inputDiv.children[0].value;
+    const columnId = inputDiv.children[0].dataset.columnId;
+    inputDiv.parentNode.parentNode.removeChild(inputDiv.parentNode);
     await dataHandler.renameColumn(inputValue, columnId);
-    renderNewColTitle(inputValue, columnId)
+    renderNewColTitle(inputValue, columnId);
 }
 
 function renderNewColTitle(inputValue, columnId) {
