@@ -30,22 +30,26 @@ function renameColumnTitle(statusId, colTitle) {
     const currentBoard = document.querySelector(`.board[data-board-id="${boardId}"]`);
 
     const inputDiv = document.createElement('div');
-    inputDiv.innerHTML = '<div class="input-div" data-column-id=${status.id}>\n            ' +
-        '                   <input class="input-field" data-column-id=${status.id}>\n            ' +
-        '                   <button class="save-btn" data-column-id=${status.id}>Save</button>\n     ' +
-        '                </div>';
+    inputDiv.innerHTML = `<div class="input-div" data-column-id="${statusId}">
+                            <input class="input-field" data-column-id="${statusId}">
+                            <button class="save-btn" data-column-id="${statusId}">Save</button>
+                           </div>`;
+    // this should be toggled....
 
     currentBoard.appendChild(inputDiv);
     const saveBtn = inputDiv.children[0].children[1];
     saveBtn.addEventListener("click", removeDivHandler);
-    // console.log(inputDiv)
-    // console.log(currentBoard.children[0])
-
-    // document.getElementById()
 }
 
-function removeDivHandler(event){
+async function removeDivHandler(event){
     const inputValue = event.currentTarget.parentNode.children[0].value;
+    const columnId = event.currentTarget.parentNode.children[0].dataset.columnId
     event.currentTarget.parentNode.parentNode.parentNode.removeChild(event.currentTarget.parentNode.parentNode);
-    console.log(event.currentTarget.parentNode.parentNode)
+    await dataHandler.renameColumn(inputValue, columnId);
+    renderNewColTitle(inputValue, columnId)
+}
+
+function renderNewColTitle(inputValue, columnId) {
+    let colTitleDiv = document.querySelector(`div.board-column-title[data-column-id="${columnId}"]`);
+    colTitleDiv.children[0].innerText = `${inputValue}`;
 }
