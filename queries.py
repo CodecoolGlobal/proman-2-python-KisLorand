@@ -98,3 +98,10 @@ def change_status(table_data):
         SQL("UPDATE cards SET status_id = {} Where id = {}").
             format( Literal(table_data["columnId"]), Literal(table_data["cardId"])))
 
+
+def update_column(col_data):
+    return data_manager.execute_update(
+        SQL("UPDATE statuses SET title = {} WHERE id = {}").
+            format( Literal(col_data["dataColTitle"]), Literal(col_data["dataColumnId"]) )
+    )
+
