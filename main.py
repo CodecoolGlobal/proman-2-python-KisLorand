@@ -49,6 +49,14 @@ def rename_post():
         return queries.update_title(table_data)
 
 
+@app.route("/api/rename_column", methods=["PATCH"])
+@json_response
+def rename_column():
+    if request.method == "PATCH":
+        col_data = request.get_json()
+        return queries.update_column(col_data)
+
+
 @app.route("/change_status", methods=["PATCH"])
 @json_response
 def change_status():
