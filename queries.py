@@ -96,5 +96,19 @@ def get_all_statuses():
 def change_status(table_data):
     return data_manager.execute_update(
         SQL("UPDATE cards SET status_id = {} Where id = {}").
-            format( Literal(table_data["columnId"]), Literal(table_data["cardId"])))
+            format(Literal(table_data["columnId"]), Literal(table_data["cardId"])))
 
+
+def login(user_name,password):
+    query = '''SELECT *
+FROM users_information
+WHERE user_name = %(user_name)s AND password = %(password)s'''
+    return data_manager.execute_select(query, {'user_name': user_name, 'password': password},fetchall=False)
+
+
+def register(user_name, password):
+    query = '''
+    INSERT INTO users_information(user_name,password)
+    VALUES (%(user_name)s, %(password)s)
+    '''
+    data_manager.execute_insert(query, {'user_name': user_name, 'password': password})
