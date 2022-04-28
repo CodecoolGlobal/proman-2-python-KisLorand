@@ -62,7 +62,6 @@ def rename_column():
 def change_status():
     if request.method == "PATCH":
         table_data = request.get_json()
-        print(table_data)
         return queries.change_status(table_data)
 
 
