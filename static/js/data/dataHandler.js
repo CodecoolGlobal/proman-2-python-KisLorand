@@ -27,6 +27,9 @@ export let dataHandler = {
         return await apiPost('/api/boards', boardTitle)
         // creates new board, saves it and calls the callback function with its data
     },
+    createNewColumn: async function (columnTitle) {
+         return await apiPost('/api/statuses', columnTitle)
+    },
     createNewCard: async function (cardTitle, boardId, statusId) {
         return await apiPost(`/api/boards/${boardId}/new_card/`, [cardTitle, boardId, statusId])
     },
@@ -50,6 +53,14 @@ export let dataHandler = {
             columnId : columnId
         }
         return await apiPatch(`/change_status`, data)
+    },
+
+    renameColumn: async function (newColTitle, columnId) {
+        const data={
+            dataColumnId : columnId,
+            dataColTitle : newColTitle
+        }
+        return await apiPatch(`/api/rename_column`, data)
     },
 
 };

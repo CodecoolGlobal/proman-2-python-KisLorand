@@ -35,7 +35,6 @@ def get_boards():
         queries.add_new_board(data['title'])
     return queries.get_boards()
 
-
 @app.route("/api/boards/<int:board_id>/cards/")
 @json_response
 def get_cards_for_board(board_id: int):
@@ -54,12 +53,19 @@ def rename_post():
         return queries.update_title(table_data)
 
 
+@app.route("/api/rename_column", methods=["PATCH"])
+@json_response
+def rename_column():
+    if request.method == "PATCH":
+        col_data = request.get_json()
+        return queries.update_column(col_data)
+
+
 @app.route("/change_status", methods=["PATCH"])
 @json_response
 def change_status():
     if request.method == "PATCH":
         table_data = request.get_json()
-        print(table_data)
         return queries.change_status(table_data)
 
 
@@ -86,9 +92,15 @@ def delete_board(board_id):
     return queries.delete_board(board_id)
 
 
-@app.route('/api/statuses')
+@app.route('/api/statuses', methods=['GET', 'POST'])
 @json_response
 def get_responses():
+
+    if request.method == 'POST':
+        title = request.get_json()
+        queries.add_new_status(title)
+        return queries.get_all_statuses()
+
     return queries.get_all_statuses()
 
 

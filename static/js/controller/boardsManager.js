@@ -36,6 +36,11 @@ export let boardsManager = {
                 addNewCardHandler
             );
             domManager.addEventListener(
+                `.board-col[data-board-id="${board.id}"]`,
+                "click",
+                addNewColumnHandler
+            )
+            domManager.addEventListener(
                 `.board-title[data-board-id="${board.id}"]`,
                 "click",
                 () => {
@@ -60,9 +65,7 @@ export let boardsManager = {
 function showHideButtonHandler(boardId) {
         const columnContainer= document.querySelector(`.board-columns[data-board-id="${boardId}"]`)
         if (columnContainer.className === 'board-columns' || columnContainer.className === 'board-columns hide') {
-            columnContainer.classList.toggle('hide')
-
-
+            columnContainer.classList.toggle('hide');
     }
 }
 
@@ -81,7 +84,6 @@ async function addNewBoard() {
         let response = await dataHandler.createNewBoard(title)
         if (response) await boardsManager.loadBoards()
         addNewBoardButton()
-
     }
 }
 
@@ -163,4 +165,9 @@ function deleteBoardButtonHandler(clickEvent){
                 dataHandler.deleteBoard(boardId).then()
         }
     }
+}
+async function addNewColumnHandler() {
+
+        let response = await dataHandler.createNewColumn("New Column")
+        if (response) await boardsManager.loadBoards()
 }

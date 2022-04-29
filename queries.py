@@ -89,8 +89,8 @@ def delete_board(board_id):
 
 
 def get_all_statuses():
-    return data_manager.execute_select('''select *
-    from statuses''')
+    return data_manager.execute_select('''SELECT *
+    FROM statuses ORDER BY id ASC''')
 
 
 def change_status(table_data):
@@ -112,3 +112,20 @@ def register(user_name, password):
     VALUES (%(user_name)s, %(password)s)
     '''
     data_manager.execute_insert(query, {'user_name': user_name, 'password': password})
+
+    
+def update_column(col_data):
+    return data_manager.execute_update(
+        SQL("UPDATE statuses SET title = {} WHERE id = {}").
+            format( Literal(col_data["dataColTitle"]), Literal(col_data["dataColumnId"]) )
+    )
+
+
+def add_new_status(title):
+    new_status = data_manager.execute_insert(
+        '''
+        INSERT INTO statuses (title) VALUES (%(title)s)
+        ''', {'title': title})
+    return new_status
+
+
