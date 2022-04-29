@@ -56,6 +56,7 @@ export let boardsManager = {
 
             columnManager.loadColumns(board.id).then()
         }
+            registerButton()
 
     }
 
@@ -149,6 +150,10 @@ function addNewBoardButton() {
     }
 }
 
+function registerButton(){
+    const addNewUser = document.getElementById('new-board-container')
+
+}
 function deleteBoardButtonHandler(clickEvent){
     const boardId = clickEvent.currentTarget.dataset.boardId;
     const boardToDelete =document.getElementsByClassName("board-container");

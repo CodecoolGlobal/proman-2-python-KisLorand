@@ -129,3 +129,13 @@ section.board{
 .card-title{
     padding-right: 16px;
 }
+
+#login{
+    display: flex;
+    justify-content: space-between;
+}
+
+#register{
+    display: flex;
+    justify-content: space-between;
+}

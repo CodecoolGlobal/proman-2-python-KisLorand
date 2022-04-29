@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, redirect, session, escape
 from dotenv import load_dotenv
 from util import json_response
 import mimetypes
@@ -7,7 +7,7 @@ import queries
 mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
 load_dotenv()
-
+app.secret_key = b'_5#y2L"F4Q8z\xec]/'
 
 
 @app.route("/")
@@ -16,8 +16,13 @@ def index():
     This is a one-pager which shows all the boards and card
     """
 
-    return render_template('index.html')
+    return render_template('index.html', session=session)
 
+@app.route('/')
+def login_true():
+    if 'username' in session:
+        return 'Logged in as %s' % escape(session['username'])
+    return 'You are not logged in'
 
 @app.route("/api/boards", methods=['POST', 'GET'])
 @json_response
@@ -99,6 +104,32 @@ def get_responses():
     return queries.get_all_statuses()
 
 
+@app.route('/login/process', methods=['POST','GET'])
+def login_data_process():
+    username = request.form['username']
+    password = request.form['password']
+    data = queries.login(username,password)
+    print(data)
+
+    if data != None:
+        session['username'] = request.form['username']
+
+    return redirect('/')
+
+
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+    username = request.form['username']
+    password = request.form['password']
+    queries.register(username,password)
+    return redirect('/')
+
+
+@app.route('/logout', methods=['POST','GET'])
+def logout():
+    print(session)
+    session.pop('username',)
+    return redirect(url_for('index'))
 
 def main():
     app.run(debug=True)
